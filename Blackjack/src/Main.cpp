@@ -1,7 +1,11 @@
 #include <iostream>
-
+#include "Card.h"
 int main() {
-	std::cout << "Hello World!" << std::endl;
+    Blackjack::Card aceOfSpades{ Blackjack::Card::Name::ACE, Blackjack::Card::Suite::SPADE };
 
-	std::cin.get();
+    std::cout << aceOfSpades.getAsciiVersion();
+
+    std::cout << (char)201;
+
+    std::cin.get();
 }
