@@ -1,0 +1,14 @@
+# Annoying files
+.vs/
+
+# Build system
+build/
+
+# Visual Studio files
+**.sln
+**.vcxproj
+**.vcxproj.user
+**.vcxproj.filters
+
+# Other
+**.ini
