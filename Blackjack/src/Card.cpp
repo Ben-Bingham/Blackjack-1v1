@@ -1,5 +1,8 @@
 #include "Card.h"
 
+#include <array>
+#include <iostream>
+
 namespace Blackjack {
 	Card::Card(Name name, Suite suite)
 		: m_Name(name), m_Suite(suite), m_AsciiVersion(generateAsciiVersion()) {
@@ -59,7 +62,7 @@ namespace Blackjack {
 		case Blackjack::Card::Suite::HEART:
 			return "<3";
 		case Blackjack::Card::Suite::SPADE:
-			return ")>";
+			return "/>";
 		default:
 			return "An error occured";
 		}
@@ -69,17 +72,41 @@ namespace Blackjack {
 		std::string value = getNameValue();
 		std::string symbol = getSymbolValue();
 
+		std::string verticalBar = std::string{ (char)179 };
+
+
 
 		std::string card = 
 		"+---------+\n"
-		"|" + value + "       |\n"
-		"|         |\n"
-		"|         |\n"
-		"|   " + symbol +"    |\n"
-		"|         |\n"
-		"|         |\n"
-		"|       " + value +"|\n"
+		"" + verticalBar + value + "       " + verticalBar + "\n"
+		"" + verticalBar + "         " + verticalBar + "\n"
+		"" + verticalBar + "         " + verticalBar + "\n"
+		"" + verticalBar + "   " + symbol +"    " + verticalBar + "\n"
+		"" + verticalBar + "         " + verticalBar + "\n"
+		"" + verticalBar + "         " + verticalBar + "\n"
+		"" + verticalBar + "       " + value + "" + verticalBar + "\n"
 		"+---------+";
 		return card;
+	}
+
+	void Card::appendAsciiVersion(std::array<std::string, 9>& screen) {
+		std::string value = getNameValue();
+		std::string symbol = getSymbolValue();
+
+		screen[0].append("+---------+");
+		screen[1].append("|" + value + "       |");
+		screen[2].append("|         |");
+		screen[3].append("|         |");
+		screen[4].append("|   " + symbol + "    |");
+		screen[5].append("|         |");
+		screen[6].append("|         |");
+		screen[7].append("|       " + value + "|");
+		screen[8].append("+---------+");
+	}
+
+
+	std::ostream& operator<<(std::ostream& os, const Card& card) {
+		os << card.getAsciiVersion();
+		return os;
 	}
 }

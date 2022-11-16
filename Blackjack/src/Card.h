@@ -28,13 +28,14 @@ namespace Blackjack {
 			KING
 		};
 
-		Card(Name name, Suite suite);
+		Card(Name name = Name::ACE, Suite suite = Suite::SPADE);
 
 		Name getName() const;
 		Suite getSuite() const;
 		std::string getAsciiVersion() const;
 		std::string getNameValue() const;
 		std::string getSymbolValue() const;
+		void appendAsciiVersion(std::array<std::string, 9>& screen);
 
 	private:
 		Name m_Name;
@@ -43,4 +44,6 @@ namespace Blackjack {
 
 		std::string generateAsciiVersion();
 	};
+
+	std::ostream& operator<<(std::ostream& os, const Card& card);
 }
