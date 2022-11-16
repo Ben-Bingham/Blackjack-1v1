@@ -41,6 +41,11 @@ namespace Blackjack {
 		return card;
 	}
 
+	void CardList::addCard(Card card) {
+		m_Cards.push_back(card);
+	}
+
+
 	unsigned int CardList::getNumberOfCards() const {
 		return m_NumberOfCards;
 	}

@@ -4,8 +4,11 @@
 #include <iostream>
 
 namespace Blackjack {
-	Card::Card(Name name, Suite suite)
-		: m_Name(name), m_Suite(suite), m_AsciiVersion(generateAsciiVersion()) {
+	Card::Card(Name name, Suite suite, bool faceUp)
+		: m_Name(name)
+		, m_Suite(suite)
+		, m_AsciiVersion(generateAsciiVersion())
+		, m_FaceUp(faceUp) {
 	}
 
 	Card::Name Card::getName() const {
@@ -68,6 +71,19 @@ namespace Blackjack {
 		}
 	}
 
+	Card& Card::flip() {
+		if (m_FaceUp) {
+			m_FaceUp = false;
+		}
+		else {
+			m_FaceUp = true;
+		}
+
+		m_AsciiVersion = generateAsciiVersion();
+
+		return *this;
+	}
+
 	std::string Card::generateAsciiVersion() {
 		std::string V = getNameValue(); // Number on card
 		std::string S = getSymbolValue(); // Suite Symbol
@@ -82,17 +98,32 @@ namespace Blackjack {
 		std::string s = std::string{ (char)192 }; // Bottom left Corner
 		std::string d = std::string{ (char)217 }; // Bottom right Corner
 
-		std::string card =
-			"" + w + t + t + t + t + t + t + t + t + t + a + "\n"
-			"" + I + V + O + O + O + O + O + O + O + I + "\n"
-			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
-			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
-			"" + I + O + O + O + S + O + O + O + O + I + "\n"
-			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
-			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
-			"" + I + O + O + O + O + O + O + O + V + I + "\n"
-			"" + s + t + t + t + t + t + t + t + t + t + d;
+		if (m_FaceUp) {
+			std::string card =
+				"" + w + t + t + t + t + t + t + t + t + t + a + "\n"
+				"" + I + V + O + O + O + O + O + O + O + I + "\n"
+				"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+				"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+				"" + I + O + O + O + S + O + O + O + O + I + "\n"
+				"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+				"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+				"" + I + O + O + O + O + O + O + O + V + I + "\n"
+				"" + s + t + t + t + t + t + t + t + t + t + d;
+			return card;
+		}
 
+		O = std::string{ (char)176 }; // Background
+
+		std::string card = 
+			"" + w + t + t + t + t + t + t + t + t + t + a + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + s + t + t + t + t + t + t + t + t + t + d;
 		return card;
 	}
 
@@ -110,15 +141,30 @@ namespace Blackjack {
 		std::string s = std::string{ (char)192 }; // Bottom left Corner
 		std::string d = std::string{ (char)217 }; // Bottom right Corner
 
-		screen[0].append("" + w + t + t + t + t + t + t + t + t + t + a);
-		screen[1].append("" + I + V + O + O + O + O + O + O + O + I);
-		screen[2].append("" + I + O + O + O + O + O + O + O + O + O + I);
-		screen[3].append("" + I + O + O + O + O + O + O + O + O + O + I);
-		screen[4].append("" + I + O + O + O + S + O + O + O + O + I);
-		screen[5].append("" + I + O + O + O + O + O + O + O + O + O + I);
-		screen[6].append("" + I + O + O + O + O + O + O + O + O + O + I);
-		screen[7].append("" + I + O + O + O + O + O + O + O + V + I);
-		screen[8].append("" + s + t + t + t + t + t + t + t + t + t + d);
+		if (m_FaceUp) {
+			screen[0].append("" + w + t + t + t + t + t + t + t + t + t + a);
+			screen[1].append("" + I + V + O + O + O + O + O + O + O + I);
+			screen[2].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[3].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[4].append("" + I + O + O + O + S + O + O + O + O + I);
+			screen[5].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[6].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[7].append("" + I + O + O + O + O + O + O + O + V + I);
+			screen[8].append("" + s + t + t + t + t + t + t + t + t + t + d);
+		}
+		else {
+			O = std::string{ (char)176 }; // Background
+
+			screen[0].append("" + w + t + t + t + t + t + t + t + t + t + a);
+			screen[1].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[2].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[3].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[4].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[5].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[6].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[7].append("" + I + O + O + O + O + O + O + O + O + O + I);
+			screen[8].append("" + s + t + t + t + t + t + t + t + t + t + d);
+		}
 	}
 
 
