@@ -1,4 +1,4 @@
-#include "Card.h"
+﻿#include "Card.h"
 
 #include <array>
 #include <iostream>
@@ -69,39 +69,56 @@ namespace Blackjack {
 	}
 
 	std::string Card::generateAsciiVersion() {
-		std::string value = getNameValue();
-		std::string symbol = getSymbolValue();
+		std::string V = getNameValue(); // Number on card
+		std::string S = getSymbolValue(); // Suite Symbol
 
-		std::string verticalBar = std::string{ (char)179 };
+		std::string I = std::string{ (char)179 }; // Vertical bar
+		std::string t = std::string{ (char)196 }; // Horizontal bar
 
-		// TODO
+		std::string O = std::string{ " " }; // Background
+		
+		std::string w = std::string{ (char)218 }; // Top left Corner
+		std::string a = std::string{ (char)191 }; // Top right Corner
+		std::string s = std::string{ (char)192 }; // Bottom left Corner
+		std::string d = std::string{ (char)217 }; // Bottom right Corner
 
-		std::string card = 
-		"+---------+\n"
-		"" + verticalBar + value + "       " + verticalBar + "\n"
-		"" + verticalBar + "         " + verticalBar + "\n"
-		"" + verticalBar + "         " + verticalBar + "\n"
-		"" + verticalBar + "   " + symbol +"    " + verticalBar + "\n"
-		"" + verticalBar + "         " + verticalBar + "\n"
-		"" + verticalBar + "         " + verticalBar + "\n"
-		"" + verticalBar + "       " + value + "" + verticalBar + "\n"
-		"+---------+";
+		std::string card =
+			"" + w + t + t + t + t + t + t + t + t + t + a + "\n"
+			"" + I + V + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + S + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
+			"" + I + O + O + O + O + O + O + O + V + I + "\n"
+			"" + s + t + t + t + t + t + t + t + t + t + d;
+
 		return card;
 	}
 
 	void Card::appendAsciiVersion(std::array<std::string, 9>& screen) {
-		std::string value = getNameValue();
-		std::string symbol = getSymbolValue();
+		std::string V = getNameValue(); // Number on card
+		std::string S = getSymbolValue(); // Suite Symbol
 
-		screen[0].append("+---------+");
-		screen[1].append("|" + value + "       |");
-		screen[2].append("|         |");
-		screen[3].append("|         |");
-		screen[4].append("|   " + symbol + "    |");
-		screen[5].append("|         |");
-		screen[6].append("|         |");
-		screen[7].append("|       " + value + "|");
-		screen[8].append("+---------+");
+		std::string I = std::string{ (char)179 }; // Vertical bar
+		std::string t = std::string{ (char)196 }; // Horizontal bar
+
+		std::string O = std::string{ " " }; // Background
+
+		std::string w = std::string{ (char)218 }; // Top left Corner
+		std::string a = std::string{ (char)191 }; // Top right Corner
+		std::string s = std::string{ (char)192 }; // Bottom left Corner
+		std::string d = std::string{ (char)217 }; // Bottom right Corner
+
+		screen[0].append("" + w + t + t + t + t + t + t + t + t + t + a);
+		screen[1].append("" + I + V + O + O + O + O + O + O + O + I);
+		screen[2].append("" + I + O + O + O + O + O + O + O + O + O + I);
+		screen[3].append("" + I + O + O + O + O + O + O + O + O + O + I);
+		screen[4].append("" + I + O + O + O + S + O + O + O + O + I);
+		screen[5].append("" + I + O + O + O + O + O + O + O + O + O + I);
+		screen[6].append("" + I + O + O + O + O + O + O + O + O + O + I);
+		screen[7].append("" + I + O + O + O + O + O + O + O + V + I);
+		screen[8].append("" + s + t + t + t + t + t + t + t + t + t + d);
 	}
 
 

@@ -12,14 +12,14 @@ std::ostream& operator<<(std::ostream& os, const std::array<std::string, 9>& scr
 }
 
 int main() {
-    //Blackjack::CardList deck{ 1 };
+    Blackjack::CardList deck{ 1 };
 
-    //std::cout << deck << std::endl;
-    //deck.shuffle();
-    //std::cout << deck << std::endl;
+    std::cout << deck << std::endl;
+    deck.shuffle();
+    std::cout << deck << std::endl;
 
-    Blackjack::Card card{ Blackjack::Card::Name::ACE, Blackjack::Card::Suite::SPADE };
-    std::cout << card << std::endl;
+    //Blackjack::Card card{ Blackjack::Card::Name::ACE, Blackjack::Card::Suite::SPADE };
+    //std::cout << card << std::endl;
 
     std::cin.get();
 }
