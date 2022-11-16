@@ -74,7 +74,7 @@ namespace Blackjack {
 
 		std::string verticalBar = std::string{ (char)179 };
 
-
+		// TODO
 
 		std::string card = 
 		"+---------+\n"
