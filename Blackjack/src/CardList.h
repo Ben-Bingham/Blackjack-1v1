@@ -14,13 +14,13 @@ namespace Blackjack {
 		Card draw();
 		void flipAllUp();
 
-		unsigned int getNumberOfCards() const;
+		[[nodiscard]] unsigned int getNumberOfCards() const;
 
-		std::vector<Card> getCards() const;
-		std::array<std::string, 9> getVisuals() const;
-		std::pair<unsigned int, unsigned int> getTotal() const;
+		[[nodiscard]] std::vector<Card> getCards() const;
+		[[nodiscard]] std::array<std::string, 9> getVisuals() const;
+		[[nodiscard]] std::pair<unsigned int, unsigned int> getTotal() const;
 
-		void addCard(Card card);
+		void addCard(const Card& card);
 
 	private:
 		std::vector<Card> m_Cards;

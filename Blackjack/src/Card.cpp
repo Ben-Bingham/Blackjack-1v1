@@ -6,29 +6,28 @@
 namespace Blackjack {
 	std::pair<unsigned int, unsigned int> Card::getValue(Name name) {
 		switch (name) {
-		case Name::ACE: return { 1, 11 };
-		case Name::TWO: return { 2, 2 };
-		case Name::THREE: return { 3, 3 };
-		case Name::FOUR: return { 4, 4 };
-		case Name::FIVE: return { 5, 5 };
-		case Name::SIX: return { 6, 6 };
-		case Name::SEVEN: return { 7, 7 };
-		case Name::EIGHT: return { 8, 8 };
-		case Name::NINE: return { 9, 9 };
+		case Name::ACE: return {1, 11};
+		case Name::TWO: return {2, 2};
+		case Name::THREE: return {3, 3};
+		case Name::FOUR: return {4, 4};
+		case Name::FIVE: return {5, 5};
+		case Name::SIX: return {6, 6};
+		case Name::SEVEN: return {7, 7};
+		case Name::EIGHT: return {8, 8};
+		case Name::NINE: return {9, 9};
 		case Name::TEN:
 		case Name::JACK:
 		case Name::QUEEN:
-		case Name::KING: return { 10, 10 };
+		case Name::KING: return {10, 10};
 		}
-		return { -1, -1 };
+		return {-1, -1};
 	}
 
 	Card::Card(Name name, Suite suite, bool faceUp)
 		: m_Name(name)
 		, m_Suite(suite)
 		, m_AsciiVersion(generateAsciiVersion())
-		, m_FaceUp(faceUp) {
-	}
+		, m_FaceUp(faceUp) { }
 
 	Card::Name Card::getName() const {
 		return m_Name;
@@ -44,31 +43,31 @@ namespace Blackjack {
 
 	std::string Card::getNameValue() const {
 		switch (m_Name) {
-		case Blackjack::Card::Name::ACE:
+		case Name::ACE:
 			return "A ";
-		case Blackjack::Card::Name::TWO:
+		case Name::TWO:
 			return "2 ";
-		case Blackjack::Card::Name::THREE:
+		case Name::THREE:
 			return "3 ";
-		case Blackjack::Card::Name::FOUR:
+		case Name::FOUR:
 			return "4 ";
-		case Blackjack::Card::Name::FIVE:
+		case Name::FIVE:
 			return "5 ";
-		case Blackjack::Card::Name::SIX:
+		case Name::SIX:
 			return "6 ";
-		case Blackjack::Card::Name::SEVEN:
+		case Name::SEVEN:
 			return "7 ";
-		case Blackjack::Card::Name::EIGHT:
+		case Name::EIGHT:
 			return "8 ";
-		case Blackjack::Card::Name::NINE:
+		case Name::NINE:
 			return "9 ";
-		case Blackjack::Card::Name::TEN:
+		case Name::TEN:
 			return "10";
-		case Blackjack::Card::Name::JACK:
+		case Name::JACK:
 			return "J ";
-		case Blackjack::Card::Name::QUEEN:
+		case Name::QUEEN:
 			return "Q ";
-		case Blackjack::Card::Name::KING:
+		case Name::KING:
 			return "K ";
 		default:
 			return "An error occured.";
@@ -77,13 +76,13 @@ namespace Blackjack {
 
 	std::string Card::getSymbolValue() const {
 		switch (m_Suite) {
-		case Blackjack::Card::Suite::CLUB:
+		case Suite::CLUB:
 			return "%&";
-		case Blackjack::Card::Suite::DIAMOND:
+		case Suite::DIAMOND:
 			return "<>";
-		case Blackjack::Card::Suite::HEART:
+		case Suite::HEART:
 			return "<3";
-		case Blackjack::Card::Suite::SPADE:
+		case Suite::SPADE:
 			return "/>";
 		default:
 			return "An error occured";
@@ -109,20 +108,19 @@ namespace Blackjack {
 		return *this;
 	}
 
-
-	std::string Card::generateAsciiVersion() {
+	std::string Card::generateAsciiVersion() const {
 		std::string V = getNameValue(); // Number on card
 		std::string S = getSymbolValue(); // Suite Symbol
 
-		std::string I = std::string{ (char)179 }; // Vertical bar
-		std::string t = std::string{ (char)196 }; // Horizontal bar
+		auto I = std::string{static_cast<char>(179)}; // Vertical bar
+		auto t = std::string{static_cast<char>(196)}; // Horizontal bar
 
-		std::string O = std::string{ " " }; // Background
-		
-		std::string w = std::string{ (char)218 }; // Top left Corner
-		std::string a = std::string{ (char)191 }; // Top right Corner
-		std::string s = std::string{ (char)192 }; // Bottom left Corner
-		std::string d = std::string{ (char)217 }; // Bottom right Corner
+		auto O = std::string{" "}; // Background
+
+		auto w = std::string{static_cast<char>(218)}; // Top left Corner
+		auto a = std::string{static_cast<char>(191)}; // Top right Corner
+		auto s = std::string{static_cast<char>(192)}; // Bottom left Corner
+		auto d = std::string{static_cast<char>(217)}; // Bottom right Corner
 
 		if (m_FaceUp) {
 			std::string card =
@@ -138,9 +136,9 @@ namespace Blackjack {
 			return card;
 		}
 
-		O = std::string{ (char)176 }; // Background
+		O = std::string{static_cast<char>(176)}; // Background
 
-		std::string card = 
+		std::string card =
 			"" + w + t + t + t + t + t + t + t + t + t + a + "\n"
 			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
 			"" + I + O + O + O + O + O + O + O + O + O + I + "\n"
@@ -157,15 +155,15 @@ namespace Blackjack {
 		std::string V = getNameValue(); // Number on card
 		std::string S = getSymbolValue(); // Suite Symbol
 
-		std::string I = std::string{ (char)179 }; // Vertical bar
-		std::string t = std::string{ (char)196 }; // Horizontal bar
+		auto I = std::string{static_cast<char>(179)}; // Vertical bar
+		auto t = std::string{static_cast<char>(196)}; // Horizontal bar
 
-		std::string O = std::string{ " " }; // Background
+		auto O = std::string{" "}; // Background
 
-		std::string w = std::string{ (char)218 }; // Top left Corner
-		std::string a = std::string{ (char)191 }; // Top right Corner
-		std::string s = std::string{ (char)192 }; // Bottom left Corner
-		std::string d = std::string{ (char)217 }; // Bottom right Corner
+		auto w = std::string{static_cast<char>(218)}; // Top left Corner
+		auto a = std::string{static_cast<char>(191)}; // Top right Corner
+		auto s = std::string{static_cast<char>(192)}; // Bottom left Corner
+		auto d = std::string{static_cast<char>(217)}; // Bottom right Corner
 
 		if (m_FaceUp) {
 			screen[0].append("" + w + t + t + t + t + t + t + t + t + t + a);
@@ -179,7 +177,7 @@ namespace Blackjack {
 			screen[8].append("" + s + t + t + t + t + t + t + t + t + t + d);
 		}
 		else {
-			O = std::string{ (char)176 }; // Background
+			O = std::string{static_cast<char>(176)}; // Background
 
 			screen[0].append("" + w + t + t + t + t + t + t + t + t + t + a);
 			screen[1].append("" + I + O + O + O + O + O + O + O + O + O + I);
@@ -192,7 +190,6 @@ namespace Blackjack {
 			screen[8].append("" + s + t + t + t + t + t + t + t + t + t + d);
 		}
 	}
-
 
 	std::ostream& operator<<(std::ostream& os, const Card& card) {
 		os << card.getAsciiVersion();

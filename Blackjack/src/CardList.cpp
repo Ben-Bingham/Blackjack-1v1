@@ -7,9 +7,9 @@ namespace Blackjack {
 		: m_NumberOfCards(numberOfDecks * 52) {
 
 		for (unsigned int i = 0; i < numberOfDecks; i++) {
-			for (Card::Suite suite : m_Suites) {
-				for (Card::Name name : m_Names) {
-					m_Cards.push_back(Card{ name, suite });
+			for (const Card::Suite suite : m_Suites) {
+				for (const Card::Name name : m_Names) {
+					m_Cards.emplace_back(Card{ name, suite });
 				}
 			}
 		}
@@ -21,7 +21,7 @@ namespace Blackjack {
 		while (shuffledCards.size() < m_NumberOfCards) {
 			std::random_device dev;
 			std::mt19937 rng(dev());
-			std::uniform_int_distribution<std::mt19937::result_type> randomValue(0, (int)m_Cards.size() - 1);
+			std::uniform_int_distribution<std::mt19937::result_type> randomValue(0, static_cast<int>(m_Cards.size()) - 1);
 
 			const unsigned int randomIndex = randomValue(rng);
 
@@ -46,11 +46,9 @@ namespace Blackjack {
 		}
 	}
 
-
-	void CardList::addCard(Card card) {
+	void CardList::addCard(const Card& card) {
 		m_Cards.push_back(card);
 	}
-
 
 	unsigned int CardList::getNumberOfCards() const {
 		return m_NumberOfCards;
@@ -102,8 +100,7 @@ namespace Blackjack {
 	};
 
 	std::ostream& operator<<(std::ostream& os, const CardList& cardList) {
-		unsigned int numberOfCards = cardList.getNumberOfCards();
-		std::vector<Card> cards = cardList.getCards();
+		const std::vector<Card> cards = cardList.getCards();
 
 		for (unsigned int i = 0; i < 52; i++) {
 			os << cards[i] << '\n';

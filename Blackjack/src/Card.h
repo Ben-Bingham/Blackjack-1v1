@@ -30,13 +30,13 @@ namespace Blackjack {
 
 		static std::pair<unsigned int, unsigned int> getValue(Name name);
 
-		Card(Name name = Name::ACE, Suite suite = Suite::SPADE, bool faceUp = true);
+		explicit Card(Name name = Name::ACE, Suite suite = Suite::SPADE, bool faceUp = true);
 
-		Name getName() const;
-		Suite getSuite() const;
-		std::string getAsciiVersion() const;
-		std::string getNameValue() const;
-		std::string getSymbolValue() const;
+		[[nodiscard]] Name getName() const;
+		[[nodiscard]] Suite getSuite() const;
+		[[nodiscard]] std::string getAsciiVersion() const;
+		[[nodiscard]] std::string getNameValue() const;
+		[[nodiscard]] std::string getSymbolValue() const;
 
 		Card& flip();
 		Card& flipUp();
@@ -49,7 +49,7 @@ namespace Blackjack {
 		std::string m_AsciiVersion;
 		bool m_FaceUp;
 
-		std::string generateAsciiVersion();
+		[[nodiscard]] std::string generateAsciiVersion() const;
 	};
 
 	std::ostream& operator<<(std::ostream& os, const Card& card);
