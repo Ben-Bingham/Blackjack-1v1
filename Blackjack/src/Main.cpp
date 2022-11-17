@@ -48,12 +48,12 @@ bool playAgain() {
 	return getPlayerInput("Would you like to play again? (Y/n)", {"Yes", "yes", "Y", "y"});
 }
 
-void playerLose() {
-	std::cout << "You lose." << std::endl;
+void playerLose(std::string reason) {
+	std::cout << "You lose." << ' ' << reason << std::endl;
 }
 
-void playerWin() {
-	std::cout << "You win!" << std::endl;
+void playerWin(std::string reason) {
+	std::cout << "You win!" << ' ' << reason << std::endl;
 }
 
 void printBoard(const Blackjack::CardList& dealersHand, const Blackjack::CardList& playersHand) {
@@ -100,13 +100,15 @@ int main() {
 			printBoard(dealersHand, playersHand);
 
 			if (bust(playersHand)) {
-				playerLose();
+				playerLose("Because you busted.");
 				playerLost = true;
 				break;
 			}
 
 			playerLost = false;
 		}
+
+		bool dealerBusts = false;
 
 		if (!playerLost) {
 			// Dealer must now play
@@ -119,6 +121,16 @@ int main() {
 				dealersHand.addCard(deck.draw()); // Dealer hits
 				printBoard(dealersHand, playersHand);
 				totals = dealersHand.getTotal();
+
+				if (bust(dealersHand)) {
+					playerWin("Because the dealer busted.");
+					dealerBusts = true;
+					break;
+				}
+			}
+
+			if (dealerBusts) {
+				continue;
 			}
 
 			// If the total is 17 or more, it must stand.
@@ -126,16 +138,30 @@ int main() {
 			const std::pair<unsigned int, unsigned int> playersTotals = playersHand.getTotal();
 			const std::pair<unsigned int, unsigned int> dealersTotals = dealersHand.getTotal();
 
-			if (playersTotals.first >= dealersTotals.first || playersTotals.second >= dealersTotals.first || playersTotals.first >= dealersTotals.second ||
-				playersTotals.second >= dealersTotals.second) {
-				playerLost = false;
-				playerWin();
+			unsigned int playersHighest{ 0 };
+			if (playersTotals.first <= 21 && playersTotals.first > playersHighest) {
+				playersHighest = playersTotals.first;
+			}
+			if (playersTotals.second <= 21 && playersTotals.second > playersHighest) {
+				playersHighest = playersTotals.second;
+			}
+
+			unsigned int dealersHighest{ 0 };
+			if (dealersTotals.first <= 21 && dealersTotals.first > dealersHighest) {
+				dealersHighest = dealersTotals.first;
+			}
+			if (dealersTotals.second <= 21 && dealersTotals.second > dealersHighest) {
+				dealersHighest = dealersTotals.second;
+			}
+
+			//playerLost = true;
+			if (playersHighest > dealersHighest) {
+				playerWin("Because you had a higher total than dealer.");
 			}
 			else {
-				playerLose();
-			}
+				playerLose("Your total was less than the dealers.");
+			}	
 		}
-
 	}
 	while (playAgain());
 }
