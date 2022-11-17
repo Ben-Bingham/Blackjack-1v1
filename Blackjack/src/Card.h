@@ -28,6 +28,8 @@ namespace Blackjack {
 			KING
 		};
 
+		static std::pair<unsigned int, unsigned int> getValue(Name name);
+
 		Card(Name name = Name::ACE, Suite suite = Suite::SPADE, bool faceUp = true);
 
 		Name getName() const;
@@ -37,8 +39,9 @@ namespace Blackjack {
 		std::string getSymbolValue() const;
 
 		Card& flip();
+		Card& flipUp();
 
-		void appendAsciiVersion(std::array<std::string, 9>& screen);
+		void appendAsciiVersion(std::array<std::string, 9>& screen) const;
 
 	private:
 		Name m_Name;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <cstdlib>
 #include <array>
 
 #include "Card.h"
@@ -13,10 +12,13 @@ namespace Blackjack {
 
 		void shuffle();
 		Card draw();
+		void flipAllUp();
 
 		unsigned int getNumberOfCards() const;
 
 		std::vector<Card> getCards() const;
+		std::array<std::string, 9> getVisuals() const;
+		std::pair<unsigned int, unsigned int> getTotal() const;
 
 		void addCard(Card card);
 

@@ -4,6 +4,25 @@
 #include <iostream>
 
 namespace Blackjack {
+	std::pair<unsigned int, unsigned int> Card::getValue(Name name) {
+		switch (name) {
+		case Name::ACE: return { 1, 11 };
+		case Name::TWO: return { 2, 2 };
+		case Name::THREE: return { 3, 3 };
+		case Name::FOUR: return { 4, 4 };
+		case Name::FIVE: return { 5, 5 };
+		case Name::SIX: return { 6, 6 };
+		case Name::SEVEN: return { 7, 7 };
+		case Name::EIGHT: return { 8, 8 };
+		case Name::NINE: return { 9, 9 };
+		case Name::TEN:
+		case Name::JACK:
+		case Name::QUEEN:
+		case Name::KING: return { 10, 10 };
+		}
+		return { -1, -1 };
+	}
+
 	Card::Card(Name name, Suite suite, bool faceUp)
 		: m_Name(name)
 		, m_Suite(suite)
@@ -80,9 +99,16 @@ namespace Blackjack {
 		}
 
 		m_AsciiVersion = generateAsciiVersion();
-
 		return *this;
 	}
+
+	Card& Card::flipUp() {
+		m_FaceUp = true;
+
+		m_AsciiVersion = generateAsciiVersion();
+		return *this;
+	}
+
 
 	std::string Card::generateAsciiVersion() {
 		std::string V = getNameValue(); // Number on card
@@ -127,7 +153,7 @@ namespace Blackjack {
 		return card;
 	}
 
-	void Card::appendAsciiVersion(std::array<std::string, 9>& screen) {
+	void Card::appendAsciiVersion(std::array<std::string, 9>& screen) const {
 		std::string V = getNameValue(); // Number on card
 		std::string S = getSymbolValue(); // Suite Symbol
 

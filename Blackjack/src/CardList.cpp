@@ -1,5 +1,4 @@
 #include "CardList.h"
-#include <cassert>
 #include <random>
 #include <iostream>
 
@@ -22,9 +21,9 @@ namespace Blackjack {
 		while (shuffledCards.size() < m_NumberOfCards) {
 			std::random_device dev;
 			std::mt19937 rng(dev());
-			std::uniform_int_distribution<std::mt19937::result_type> randomValue(0, m_Cards.size() - 1);
+			std::uniform_int_distribution<std::mt19937::result_type> randomValue(0, (int)m_Cards.size() - 1);
 
-			unsigned int randomIndex = (unsigned int)randomValue(rng);
+			const unsigned int randomIndex = randomValue(rng);
 
 			shuffledCards.push_back(*(m_Cards.begin() + randomIndex));
 
@@ -41,6 +40,13 @@ namespace Blackjack {
 		return card;
 	}
 
+	void CardList::flipAllUp() {
+		for (Card& card : m_Cards) {
+			card.flipUp();
+		}
+	}
+
+
 	void CardList::addCard(Card card) {
 		m_Cards.push_back(card);
 	}
@@ -52,6 +58,24 @@ namespace Blackjack {
 
 	std::vector<Card> CardList::getCards() const {
 		return m_Cards;
+	}
+
+	std::array<std::string, 9> CardList::getVisuals() const {
+		std::array<std::string, 9> visuals;
+		for (const Card& card : m_Cards) {
+			card.appendAsciiVersion(visuals);
+		}
+
+		return visuals;
+	}
+
+	std::pair<unsigned int, unsigned int> CardList::getTotal() const {
+		std::pair<unsigned int, unsigned int> results;
+		for (const Card& card : m_Cards) {
+			results.first += Card::getValue(card.getName()).first;
+			results.second += Card::getValue(card.getName()).second;
+		}
+		return results;
 	}
 
 	const std::array<Card::Suite, 4> CardList::m_Suites = {
